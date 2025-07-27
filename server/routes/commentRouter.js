@@ -4,5 +4,6 @@ const CommentController = require("../controller/commentController")
 
 router.post("/", CommentController.create)
 router.get('/', CommentController.getAll)
+router.delete('/:id', CommentController.deleteComment)
 
 module.exports = router

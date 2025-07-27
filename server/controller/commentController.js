@@ -21,6 +21,26 @@ class CommentController {
         const comments = await Comment.findAll();
         res.json(comments);
     }
+
+    async deleteComment(req, res) {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ message: "ID is required" });
+        }
+
+        try {
+            const comment = await Comment.destroy({ where: { id } });
+
+            if (!comment) {
+                return res.status(404).json({ message: "Comment not found" });
+            }
+
+            return res.json({ message: "Comment deleted successfully" });
+        } catch (error) {
+            return res.status(500).json({ message: "Internal server error", error: error.message });
+        }
+    }
 }
 
 module.exports = new CommentController();
